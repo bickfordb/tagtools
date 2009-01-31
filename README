@@ -1,0 +1,4 @@
+Requirements:
+    TagLib (1.5?)
+    Python 2.5.x (2.4/2.3 may work but are untested)
+
