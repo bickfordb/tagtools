@@ -1,3 +1,16 @@
+Tools for lazily tagging and cleaning up large collections of MP3 files 
+
+My world view is that mp3 collections seem to be best organized by directories
+like:
+    <artist> - <album> (year, notes)/<track> - <title>.ext
+
+I recognize a large number of other people, incl. iTunes (tm.) use:
+    <artist>/<album>/<track> - <title>.ext 
+
+This software is currently incompatible with the later viewpoint (since I have
+no interest in developing/testing it), but if you want to contribute patches to
+make both work, they are welcome.
+
 Requirements:
     TagLib (1.5?)
     Python 2.5.x (2.4/2.3 may work but are untested)

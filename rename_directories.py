@@ -1,3 +1,24 @@
+"""Fancy tag directory renamer tool
+
+If you have a set of directories like
+
+messy artist name - messy album name messy year (notes)
+...
+
+This will rename the directory names to be like:
+
+Artist Name - Album Name (Year, Notes)
+...
+
+It will use the artist, album, year from the tags inside, otherwise it will try
+to parse it from the directory name.  If there are 2 artists, this is
+considered a "split" album, and the artist names will be comma joined.
+Directories with more than two artists will not be renamed.  You should run
+this after you update your ID3 tags for a directory.
+
+This tool probably won't be of much use to people who use directory structures other than "<Artist> - <Album> (<Year>)" to store their music.
+
+"""
 from taglib import TagScript
 from os.path import dirname, split, sep, join
 import os
@@ -5,8 +26,12 @@ from collections import defaultdict
 import string
 import re
 import unicodedata
+import sys
 
 def parse_directory(directory): 
+    """Parse the album, artist, notes, and year from a directory name and return it in a dictionary like
+    {year:year or None, artist:artist or None, album:album or None, notes:notes}
+    """
     if sep in directory:
         directory = split(directory)[1]
     artist = extract_artist(directory)
@@ -82,19 +107,19 @@ class RenameDirectories(TagScript):
         notes = dirinfo['notes']
 
         if len(artists) > 2:
-            print directory, "has too many artists set, skipping"
+            print repr(directory), "has too many artists set, skipping"
             return
         elif not artists:
-            print directory, "has no artist set, skipping"
+            print repr(directory), "has no artist set, skipping"
             return
         elif len(albums) > 1:
-            print directory, "has too many albums set, skipping"
+            print repr(directory), "has too many albums set, skipping"
             return
         elif not albums:
-            print directory, "has no album set, skipping"
+            print repr(directory), "has no album set, skipping"
             return
         elif len(years) > 1:
-            print directory, "has too many years set, skipping"
+            print repr(directory), "has too many years set, skipping"
             return
         
         artist = ', '.join(sorted(artists))
